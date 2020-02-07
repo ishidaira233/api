@@ -1,5 +1,39 @@
 Docker : Nginx + PHP-FPM + Postgresql
 
+Installation de cet architecture :
+```
+#----------1. Installation de Docker----------------#
+sudo apt-get remove docker docker-engine docker.io containerd runc #uninstall old versions
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg2 \
+    software-properties-common
+#---------2. Creer des fichiers comme suivant------#
+.
+├── bdd
+│   ├── data1
+│   ├── data2
+│   └── data3
+├── docker-compose.yml
+├── html
+│   ├── index.php
+│   └── style.css
+├── html2
+│   └── index.php
+├── html3
+│   └── index.php
+└── nginx
+    ├── Dockerfile
+    ├── proxy.conf
+    ├── site1.conf
+    ├── site2.conf
+    └── site3.conf
+#--------3. Ajouter le contenu des fichiers comme ci-dessous-----#
+```
+
 Le contenu de docker-compose.yml :
 
 ```
@@ -203,10 +237,12 @@ server {
     }
 }
 ```
-
-Donc j'ai 10 conteneurs suivants :
-
 ```
+#--------4. Execution de Docker-----#
+docker-compose up
+
+# Donc j'ai 10 conteneurs suivants :
+
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
 32defe3610f5        nginx:latest        "nginx -g 'daemon of…"   28 hours ago        Up 28 hours         0.0.0.0:80->80/tcp   proxy
 95e549b2a4c1        postgres:10         "docker-entrypoint.s…"   28 hours ago        Up 28 hours         5432/tcp             postgresql2
